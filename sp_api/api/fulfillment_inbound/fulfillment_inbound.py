@@ -1147,10 +1147,78 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
 
-    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/trackingDetails', method='PUT')
-    def update_shipment_tracking_details(self, inboundPlanId, **kwargs) -> ApiResponse:
+    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/shipments/{}/name', method='PUT')
+    def update_shipment_name(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
         """
-        update_shipment_tracking_details(self, inboundPlanId, **kwargs) -> ApiResponse
+        update_shipment_name(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
+
+        Updates the name of an existing shipment.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+
+            inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
+
+            shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
+
+            body: | * REQUIRED {'description': 'The `updateShipmentName` request.',
+ 'example': {'name': 'name'},
+ 'properties': {'name': {'$ref': '#/definitions/UpdateShipmentNameRequest'}},
+ 'required': ['name'],
+ 'type': 'object'}
+
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId), data=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/shipments/{}/sourceAddress', method='PUT')
+    def update_shipment_source_address(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
+        """
+        update_shipment_source_address(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
+
+        Updates the source address of an existing shipment. The shipment source address can only be updated prior to the confirmation of the shipment carriers. As a result of the updated source address, existing transportation options will be invalidated and will need to be regenerated to capture the potential difference in transportation options and quotes due to the new source address.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+
+            inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
+
+            shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
+
+            body: | * REQUIRED {'description': 'The `updateShipmentName` request.',
+ 'example': {"address" : {"addressLine1" : "123 example street","addressLine2" : "Floor 19","city" : "Toronto","companyName" : "Acme","countryCode" : "CA","email" : "email@email.com","name" : "name","phoneNumber" : "1234567890","postalCode" : "M1M1M1","stateOrProvinceCode" : "ON"}},
+ 'properties': {'address': {'$ref': '#/definitions/AddressInput'}},
+ 'required': ['address'],
+ 'type': 'object'}
+
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId), data=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/shipments/{}/trackingDetails', method='PUT')
+    def update_shipment_tracking_details(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
+        """
+        update_shipment_tracking_details(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
 
         Updates a shipment's tracking details.
 
@@ -1158,7 +1226,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
 | Rate (requests per second) | Burst |
 | ---- | ---- |
-| 1 | 1 |
+| 2 | 2 |
 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
@@ -1179,7 +1247,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId), data=kwargs)
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/transportationOptions', method='GET')
     def list_transportation_options(self, inboundPlanId, **kwargs) -> ApiResponse:
